@@ -7,7 +7,7 @@ Validate Nginx Subrequest Auths
 3. Run the application `node index.js`
 
 ## How it works
-This micro-api accepts requests, and attempts to validate the HTTP Header `OIP-Auth`. 
+This micro-api accepts requests (at `/auth_request`), and attempts to validate the HTTP Header `OIP-Auth`. 
 
 The header sent to the API should have this structure:
 ```javascript
