@@ -28,3 +28,6 @@ Example
 ```
 
 The server will respond with status `202` if the message is validated successfully, and responds with `401` if the validation failed.
+
+## Extra Notes
+One thing to know is that this API does not attempt to validate the `OIP-Auth` header ONLY IF the original request type is `OPTIONS` (meaning that it is a Preflight request). All other requests (`GET`, `POST`, etc) will be validated.
