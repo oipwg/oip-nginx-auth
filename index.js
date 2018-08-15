@@ -5,12 +5,24 @@ const app = express()
 const config = require("./config.json")
 
 app.get('/auth_request', (req, res) => {
+	var original_request_type = req.get("X-Original-Method")
 	var auth_message = req.get("OIP-Auth")
 
 	if (auth_message === undefined){
 		if (config.debug)
 			console.log("Auth Message Undefined!")
-		res.status(401).send()
+
+		if (original_request_type === "OPTIONS"){
+			if (config.debug)
+				console.log(`Request type is ${original_request_type}, responding with 202 and ignoring validation`)
+
+			res.status(202).send()
+		} else {
+			if (config.debug)
+				console.log(`Request type is ${original_request_type}, responding with 401!`)
+
+			res.status(401).send()
+		}
 	} else {
 		try {
 			var parsed_json = JSON.parse(auth_message)
