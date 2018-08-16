@@ -1,8 +1,13 @@
 const bitcoinMessage = require('bitcoinjs-message')
 const express = require('express')
+const bodyParser = require('body-parser');
+
 const app = express()
 
 const config = require("./config.json")
+
+// Set the API to not care about body size
+app.use(bodyParser.json({limit: '10240mb'}));
 
 app.get('/auth_request', (req, res) => {
 	var original_request_type = req.get("X-Original-Method")
