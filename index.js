@@ -7,7 +7,10 @@ const app = express()
 const config = require("./config.json")
 
 // Set the API to not care about body size
-app.use(bodyParser({limit: '50mb'}));
+app.use(function(err, req, res, next){
+	console.log(err)
+	next()
+});
 
 app.get('/auth_request', (req, res) => {
 	var original_request_type = req.get("X-Original-Method")
