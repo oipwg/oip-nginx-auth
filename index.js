@@ -1,10 +1,14 @@
 const bitcoinMessage = require('bitcoinjs-message')
 const express = require('express')
-const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
 
 const app = express()
 
 const config = require("./config.json")
+
+app.use(fileUpload({
+  limits: { fileSize: 50 * 1024 * 1024 },
+}));
 
 app.get('/auth_request', (req, res) => {
 	var original_request_type = req.get("X-Original-Method")
@@ -50,11 +54,5 @@ app.get('/auth_request', (req, res) => {
 		}
 	}
 })
-
-// Set the API to not care about body size
-app.use(function(err, req, res, next){
-	console.log(err)
-	next()
-});
 
 app.listen(config.port, () => console.log('OIP-Nginx-Auth listening on port ' + config.port))
