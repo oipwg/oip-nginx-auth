@@ -6,12 +6,6 @@ const app = express()
 
 const config = require("./config.json")
 
-// Set the API to not care about body size
-app.use(function(err, req, res, next){
-	console.log(err)
-	next()
-});
-
 app.get('/auth_request', (req, res) => {
 	var original_request_type = req.get("X-Original-Method")
 	var auth_message = req.get("OIP-Auth")
@@ -56,5 +50,11 @@ app.get('/auth_request', (req, res) => {
 		}
 	}
 })
+
+// Set the API to not care about body size
+app.use(function(err, req, res, next){
+	console.log(err)
+	next()
+});
 
 app.listen(config.port, () => console.log('OIP-Nginx-Auth listening on port ' + config.port))
